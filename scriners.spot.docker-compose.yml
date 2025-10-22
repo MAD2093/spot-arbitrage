@@ -1,0 +1,18 @@
+services:
+  scriner_spot:
+    build: 
+      dockerfile: Dockerfile
+    container_name: scriner_spot
+    networks:
+      - monitoring
+      - postgres
+      - redis
+    restart: unless-stopped
+
+networks:
+  monitoring:
+    external: true 
+  postgres:
+    external: true
+  redis:
+      external: true 
