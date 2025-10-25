@@ -191,14 +191,30 @@ func GetOrderbook(exchange, symbol string) common.OrderBook {
 		result = req.Bingx_get_orderbook(symbol)
 	case "BITGET":
 		result = req.Bitget_get_orderbook(symbol)
+	case "KUCOIN":
+		result = req.Kucoin_get_orderbook(symbol)
 	case "HTX":
 		result = req.Htx_get_orderbook(symbol)
 	case "OKX":
 		result = req.Okx_get_orderbook(symbol)
 	case "POLONIEX":
 		result = req.Poloniex_get_orderbook(symbol)
-	case "KUCOIN":
-		result = req.Kucoin_get_orderbook(symbol)
+	case "BITMART":
+		result = req.Bitmart_get_orderbook(symbol)
+	case "BINANCE":
+		result = req.Binance_get_orderbook(symbol)
+	case "COINEX":
+		result = req.Coinex_get_orderbook(symbol)
+	case "COINW":
+		result = req.Coinw_get_orderbook(symbol)
+	case "XT":
+		result = req.Xt_get_orderbook(symbol)
+	case "ASCENDEX":
+		result = req.Ascendex_get_orderbook(symbol)
+	case "DIGIFINEX":
+		result = req.Digifinex_get_orderbook(symbol)
+	case "BITRUE":
+		result = req.Bitrue_get_orderbook(symbol)
 	}
 
 	return result

@@ -1,38 +1,38 @@
 package req
 
 import (
-	"mad-scanner.com/scriner/internal/proxy"
+	"mad-scanner.com/scriner/pkg/clients/http"
+	"mad-scanner.com/scriner/pkg/clients/http/proxy"
 )
 
-var clients = make(map[string]*ExchangeClient)
+var clients = make(map[string]*http.HTTPClient)
 
 func InitExchangeClients(proxyPool *proxy.ProxyPool) {
-	// Конфигурации rate limit для разных бирж
-	exchangeConfigs := map[string]struct {
-		rps   int
-		burst int
-	}{
-		"kucoin":   {rps: 20, burst: 40},
-		"mexc":     {rps: 20, burst: 40},
-		"gate":     {rps: 20, burst: 40},
-		"bybit":    {rps: 20, burst: 40},
-		"bingx":    {rps: 20, burst: 40},
-		"bitget":   {rps: 20, burst: 40},
-		"htx":      {rps: 20, burst: 40},
-		"okx":      {rps: 20, burst: 40},
-		"poloniex": {rps: 20, burst: 40},
+	exchanges := [17]string{
+		"MEXC",
+		"GATE",
+		"BYBIT",
+		"BINGX",
+		"BITGET",
+		"KUCOIN",
+		"HTX",
+		"OKX",
+		"POLONIEX",
+		"BITMART",
+		"BINANCE",
+		"COINEX",
+		"COINW",
+		"XT",
+		"ASCENDEX",
+		"DIGIFINEX",
+		"BITRUE",
 	}
 
-	for name, config := range exchangeConfigs {
-		clients[name] = NewExchangeClient(ClientConfig{
-			Name:      name,
-			RPS:       config.rps,
-			Burst:     config.burst,
-			ProxyPool: proxyPool,
-		})
+	for _, name := range exchanges {
+		clients[name] = http.NewHTTPClient(proxyPool)
 	}
 }
 
-func GetExchangeClient(name string) *ExchangeClient {
+func GetExchangeClient(name string) *http.HTTPClient {
 	return clients[name]
 }

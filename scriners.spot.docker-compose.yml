@@ -1,8 +1,24 @@
 services:
-  scriner_spot:
+  scriner-spot-prod:
+    container_name: scriner-spot-prod
     build: 
       dockerfile: Dockerfile
-    container_name: scriner_spot
+    environment:
+      - APP_ENV=production
+    networks:
+      - monitoring
+      - postgres
+      - redis
+    restart: unless-stopped
+  scriner-spot-test:
+    container_name: scriner-spot-test
+    build: 
+      dockerfile: Dockerfile
+      args:
+        BUILD_ENV: test
+        APP_PATH: ./cmd/test/main.go
+    environment:
+      - APP_ENV=test
     networks:
       - monitoring
       - postgres

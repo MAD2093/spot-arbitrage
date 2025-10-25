@@ -47,7 +47,7 @@ func Init(cfg Config) *zerolog.Logger {
 
 func GetLogger() *zerolog.Logger {
 	if log == nil {
-		// panic("logger was not initialized")
+		panic("logger was not initialized")
 	}
 	return log
 }

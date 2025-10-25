@@ -3,6 +3,7 @@ module mad-scanner.com/scriner
 go 1.24.3
 
 require (
+	github.com/Q1rD/rdmutex v0.0.0-20251025205423-44254ae0c4be
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12
 )
@@ -37,5 +38,4 @@ require (
 	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
-	golang.org/x/time v0.14.0
 )

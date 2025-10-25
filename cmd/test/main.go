@@ -24,69 +24,68 @@ func test_webserver() {
 // cooldown - задержка между пушами в канал;
 func generate_websocket_data(count int, cooldown time.Duration) {
 	for i := 0; i < count; i++ {
-		common.ServerChannel <- GenerateRandomServerData()
-		time.Sleep(cooldown) // Опциональная задержка
+		common.ServerChannel <- MockData()
+		time.Sleep(cooldown)
 	}
 }
 
-func GenerateRandomServerData() common.ServerData {
-	symbols := []string{"BTC", "ETH", "BNB", "XRP", "SOL", "ADA", "DOT", "DOGE", "AVAX", "MATIC"}
-	exchanges := []string{"Binance", "OKX", "Bybit", "Kucoin", "Gate", "Mexc", "Bitget", "HTX", "Poloniex", "Bitmart"}
-	networks := []string{"ERC20", "TRC20", "BEP20", "SOL", "AVAX", "Polygon", "Arbitrum", "Optimism", "Lightning"}
-
-	symbol := symbols[rand.Intn(len(symbols))]
-
-	// Генерация разных бирж для депозита и вывода
-	depositExchange := exchanges[rand.Intn(len(exchanges))]
-	withdrawalExchange := exchanges[rand.Intn(len(exchanges))]
-	for withdrawalExchange == depositExchange {
-		withdrawalExchange = exchanges[rand.Intn(len(exchanges))]
-	}
-
-	network := networks[rand.Intn(len(networks))]
-
-	// Генерация правдоподобных значений
+func MockData() common.ServerData {
 	return common.ServerData{
-		Symbol:             symbol,
-		DepositExchange:    depositExchange,
-		WithdrawalExchange: withdrawalExchange,
-		WithdrawalNetwork:  network,
-		WithdrawalFee:      rand.Float64()*10 + 0.1,
+		Symbol:             "BTC",
+		DepositExchange:    "MEXC",
+		WithdrawalExchange: "OKX",
+		WithdrawalNetwork:  "ERC20",
+		WithdrawalFee:      0.1,
 		WithdrawalTime:     strconv.Itoa(rand.Intn(50)+10) + "s",
-		MakerFee:           rand.Float64()*0.1 + 0.01,
+		MakerFee:           0,
 		TimeLife:           strconv.Itoa(rand.Intn(50)+10) + "m",
+		Volume24h:          142986,
 		Data: common.VolumeData{
 			Up: common.UpperLimit{
-				AskVolUsdt: rand.Float64()*1000000 + 10000,
-				BidVolUsdt: rand.Float64()*1000000 + 10000,
-				BuyPrice:   rand.Float64()*10000 + 100,
-				SellPrice:  rand.Float64()*10000 + 100,
-				Profit:     rand.Float64()*20 - 10,
-				AskDepth:   rand.Intn(1000) + 100,
-				BidDepth:   rand.Intn(1000) + 100,
-				Spread:     rand.Float64()*0.5 + 0.1,
+				AskVolUsdt: 3890,
+				BidVolUsdt: 3895.2000000000003,
+				BuyPrice:   114.41176470588235,
+				SellPrice:  114.90265486725664,
+				Profit:     5.200000000000273,
+				AskDepth:   4,
+				BidDepth:   5,
+				Spread:     0.42905566803923006,
 			},
 			Low: common.LowerLimit{
-				AskVolUsdt: rand.Float64()*100000 + 1000,
-				BidVolUsdt: rand.Float64()*100000 + 1000,
-				BuyPrice:   rand.Float64()*10000 + 100,
-				SellPrice:  rand.Float64()*10000 + 100,
-				Profit:     rand.Float64()*20 - 10,
-				AskDepth:   rand.Intn(500) + 50,
-				BidDepth:   rand.Intn(500) + 50,
-				Spread:     rand.Float64()*0.5 + 0.1,
+				AskVolUsdt: 220,
+				BidVolUsdt: 228,
+				BuyPrice:   110,
+				SellPrice:  120,
+				Profit:     8,
+				AskDepth:   1,
+				BidDepth:   1,
+				Spread:     9.090909090909092,
+			},
+			Best: common.BestVolume{
+				AskVolUsdt: 1560,
+				BidVolUsdt: 1663.5,
+				BuyPrice:   111.42857142857143,
+				SellPrice:  119.67625899280576,
+				Profit:     103.5,
+				AskDepth:   2,
+				BidDepth:   2,
+				Spread:     7.401770890979523,
 			},
 		},
 		OrderBook: common.OrderBook{
 			Asks: []common.Order{
-				{Price: rand.Float64()*10000 + 100, Amount: rand.Float64()*10 + 1},
-				{Price: rand.Float64()*10000 + 100, Amount: rand.Float64()*10 + 1},
-				{Price: rand.Float64()*10000 + 100, Amount: rand.Float64()*10 + 1},
+				{Price: 110, Amount: 10},
+				{Price: 115, Amount: 5},
+				{Price: 116, Amount: 8},
+				{Price: 117, Amount: 11},
+				{Price: 120, Amount: 20},
 			},
 			Bids: []common.Order{
-				{Price: rand.Float64()*10000 + 100, Amount: rand.Float64()*10 + 1},
-				{Price: rand.Float64()*10000 + 100, Amount: rand.Float64()*10 + 1},
-				{Price: rand.Float64()*10000 + 100, Amount: rand.Float64()*10 + 1},
+				{Price: 120, Amount: 13},
+				{Price: 115, Amount: 8},
+				{Price: 113, Amount: 2},
+				{Price: 111, Amount: 4},
+				{Price: 108, Amount: 16},
 			},
 		},
 	}
